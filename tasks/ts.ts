@@ -30,6 +30,12 @@ interface ITaskOptions {
     declaration: boolean;
     comments: boolean;
     verbose: boolean;
+    allowbool?: boolean;
+    allowimportmodule?: boolean;
+    mapRoot?: string;
+    noImplicitAny?: boolean;
+    noResolve?: boolean;
+    sourceRoot?: string;
 }
 
 // General util functions 
@@ -102,10 +108,22 @@ function pluginFn(grunt: IGrunt) {
             cmd = cmd + ' --declaration';
         if (!task.comments)
             cmd = cmd + ' --removeComments';
+        if (task.allowbool)
+            cmd = cmd + ' --allowbool';
+        if (task.allowimportmodule)
+            cmd = cmd + ' --allowimportmodule';
+        if (task.noImplicitAny)
+            cmd = cmd + ' --noImplicitAny';
+        if (task.noResolve)
+            cmd = cmd + ' --noResolve';
 
         // string options
         cmd = cmd + ' --target ' + task.target.toUpperCase();
         cmd = cmd + ' --module ' + task.module.toLowerCase();
+        if (task.mapRoot)
+            cmd = cmd + ' --mapRoot ' + task.mapRoot;
+        if (task.sourceRoot)
+            cmd = cmd + ' --sourceRoot ' + task.sourceRoot;
 
         // Target options: 
         if (target.out) {
