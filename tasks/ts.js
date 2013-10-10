@@ -463,7 +463,8 @@ function pluginFn(grunt) {
             declaration: false,
             sourcemap: true,
             comments: false,
-            verbose: false
+            verbose: false,
+            failOnError: true
         });
 
         // Was the whole process successful
@@ -551,7 +552,7 @@ function pluginFn(grunt) {
                 // End the timer
                 endtime = new Date().getTime();
 
-                if (result.code != 0) {
+                if (options.failOnError && result.code != 0) {
                     var msg = "Compilation failed"/*+result.output*/ ;
                     grunt.log.error(msg.red);
                     success = false;

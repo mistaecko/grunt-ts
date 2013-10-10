@@ -36,6 +36,7 @@ interface ITaskOptions {
     noImplicitAny?: boolean;
     noResolve?: boolean;
     sourceRoot?: string;
+    failOnError?: boolean;
 }
 
 // General util functions 
@@ -511,6 +512,7 @@ function pluginFn(grunt: IGrunt) {
             sourcemap: true,
             comments: false,
             verbose:false,
+            failOnError: true
         });
 
         // Was the whole process successful
@@ -601,7 +603,7 @@ function pluginFn(grunt: IGrunt) {
                 endtime = new Date().getTime();
 
                 // Evaluate the result
-                if (result.code != 0) {
+                if (options.failOnError && result.code != 0) {
                     var msg = "Compilation failed"/*+result.output*/;
                     grunt.log.error(msg.red);
                     success = false;
